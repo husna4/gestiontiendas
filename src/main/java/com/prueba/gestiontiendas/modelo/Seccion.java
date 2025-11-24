@@ -23,7 +23,7 @@ public class Seccion {
     @Column(nullable = false)
     private String nombre;
 
-    @Column(name = "horas_trabajo_diarias", nullable = false)
+    @Column(name = "horas_trabajo_necesarias", nullable = false)
     private Integer horasTrabajoNecesarias;
 
     @OneToMany(mappedBy = "seccion")

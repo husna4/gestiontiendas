@@ -1,0 +1,141 @@
+{
+  "info": {
+    "name": "Gestión Tiendas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "Trabajadores",
+      "item": [
+        {
+          "name": "Listar trabajadores de tienda",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tiendas/1/trabajadores"
+          }
+        },
+        {
+          "name": "Obtener trabajador",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trabajadores/1"
+          }
+        },
+        {
+          "name": "Crear trabajador",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/tiendas/1/trabajadores",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellidos\": \"García López\",\n  \"dni\": \"12345678A\",\n  \"horasDisponibles\": 8\n}"
+            }
+          }
+        },
+        {
+          "name": "Editar trabajador",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/trabajadores/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Juan Antonio\",\n  \"apellidos\": \"García López\",\n  \"dni\": \"12345678A\",\n  \"horasDisponibles\": 6\n}"
+            }
+          }
+        },
+        {
+          "name": "Eliminar trabajador",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/trabajadores/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Asignaciones",
+      "item": [
+        {
+          "name": "Listar asignaciones de trabajador",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/trabajadores/1/asignaciones"
+          }
+        },
+        {
+          "name": "Asignar trabajador a sección",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/trabajadores/1/asignaciones",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"seccionId\": 1,\n  \"horasAsignadas\": 4\n}"
+            }
+          }
+        },
+        {
+          "name": "Desasignar trabajador de sección",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/trabajadores/1/asignaciones/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Informes",
+      "item": [
+        {
+          "name": "Informe estado tienda",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tiendas/1/informes/estado"
+          }
+        },
+        {
+          "name": "Informe horas sin cubrir",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tiendas/1/informes/horas-sin-cubrir"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tiendas",
+      "item": [
+        {
+          "name": "Tienda con secciones y aptitudes",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tiendas/1/secciones-aptitudes"
+          }
+        }
+      ]
+    }
+  ]
+}

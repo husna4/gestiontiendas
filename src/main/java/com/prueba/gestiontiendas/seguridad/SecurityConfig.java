@@ -36,20 +36,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/api-docs/**").permitAll()
-                        .requestMatchers("/api/trabajadores/**").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/tiendas/**").hasAnyRole("ADMIN", "USER")
-                        .anyRequest().authenticated()
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+        http.csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/api-docs/**").permitAll()
+                .requestMatchers("/api/trabajadores/**").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/tiendas/**").hasAnyRole("ADMIN", "USER")
+                .anyRequest().authenticated()
+        )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
 //                .authenticationProvider(authenticationProvider()) No hace falta ya, el ves el método, hay cosas deprecadas en él
-                .addFilterBefore(filtroAuthJwt, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(filtroAuthJwt, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

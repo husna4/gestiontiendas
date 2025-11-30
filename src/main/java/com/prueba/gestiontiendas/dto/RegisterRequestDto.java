@@ -2,10 +2,13 @@ package com.prueba.gestiontiendas.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 /**
  * @author Husnain
  */
+
+@Data
 public class RegisterRequestDto {
 
     @NotBlank(message = "{auth.username.obligatorio}")

@@ -5,11 +5,15 @@ Aplicación para la gestión de tiendas de una cadena de supermercados, incluyen
 ## Tecnologías
 
 - Java 21
-- Spring Boot 3.5.8
+- Spring Boot 3
 - PostgreSQL
 - Docker / Docker Compose
+- Spring Security + JWT (autenticación)
+- Flyway (migraciones de base de datos)
+- Internacionalización (i18n)
+- Swagger/OpenAPI
 
-## Ejecución con Docker
+## Ejecución con Docker (Recomendado)
 
 ### Requisitos
 - Docker
@@ -40,9 +44,94 @@ docker-compose down
 docker-compose down -v
 ```
 
+## Ejecución local (Desarrollo)
+
+### Requisitos
+- Java 21
+- Maven
+- PostgreSQL
+
+### Configuración
+
+1. Crear base de datos `mydb` en PostgreSQL
+2. Configurar credenciales en `application.properties` si es necesario
+3. Levantar el servicio externo de tiendas:
+
+```bash
+docker run -d -p 8081:8080 jameral/stores:latest
+```
+
+### Ejecutar
+
+```bash
+mvn spring-boot:run
+```
+
 ## Colección de Peticiones
 
 La colección de Postman está disponible en: `postman/gestiontiendas.postman_collection.json`
+
+**Importante:** Todos los endpoints (excepto login y register) requieren autenticación JWT.
+
+## Autenticación
+
+La aplicación utiliza **JWT (JSON Web Tokens)** para la autenticación.
+
+### Usuarios por defecto
+
+- **Admin:** username: `admin`, password: `admin123`
+- **User:** username: `user`, password: `user123`
+
+### Flujo de autenticación
+
+**1. Login:**
+```bash
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+**Respuesta:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "username": "admin",
+  "role": "ADMIN"
+}
+```
+
+**2. Usar el token en requests:**
+
+Añade el header en todas las peticiones protegidas:
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**3. Registrar nuevo usuario:**
+```bash
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "username": "nuevouser",
+  "password": "password123"
+}
+```
+
+### Endpoints públicos (sin autenticación)
+
+- `POST /api/auth/login`
+- `POST /api/auth/register`
+- `/swagger-ui.html`
+- `/api-docs`
+
+### Endpoints protegidos
+
+Todos los demás endpoints requieren token JWT válido.
 
 ## Internacionalización
 
@@ -57,12 +146,40 @@ El idioma se determina mediante el header `Accept-Language`.
 Accept-Language: es  (español)
 Accept-Language: en  (inglés)
 ```
+
 ## Documentación API (Swagger)
 
 La documentación interactiva de la API está disponible en:
+
 **Swagger UI:** http://localhost:8080/swagger-ui.html
 
+Desde aquí puedes:
+- Ver todos los endpoints disponibles
+- Probar las peticiones directamente desde el navegador
+- Ver los esquemas de los DTOs
+- Consultar los códigos de respuesta
+
 **OpenAPI JSON:** http://localhost:8080/api-docs
+
+## Gestión de Base de Datos
+
+El proyecto utiliza **Flyway** para el control de versiones y migraciones de base de datos.
+
+### Migraciones
+
+Los scripts de migración se encuentran en `src/main/resources/db/migration/`:
+
+- `V1__crear_tablas.sql` - Creación de tablas principales
+- `V2__insertar_secciones.sql` - Datos iniciales de secciones
+- `V3__insertar_tiendas.sql` - Datos iniciales de tiendas
+- `V4__insertar_aptitudes.sql` - Datos iniciales de aptitudes
+- `V5__insertar_seccion_aptitudes.sql` - Relaciones sección-aptitud
+
+### Historial de migraciones
+
+Flyway mantiene un registro de todas las migraciones ejecutadas en la tabla `flyway_schema_history`.
+
+**Nota:** Los scripts de migración nunca deben modificarse una vez ejecutados. Para realizar cambios en el esquema, crear nuevos scripts con versiones incrementales (V6, V7, etc.).
 
 ## Endpoints API
 

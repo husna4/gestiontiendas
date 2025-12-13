@@ -2,10 +2,19 @@
 
 Aplicación para la gestión de tiendas de una cadena de supermercados, incluyendo la gestión de trabajadores, secciones y asignaciones.
 
+## ⚠️ Nota de Seguridad
+
+Este proyecto es para fines de aprendizaje y portfolio. Las credenciales en `application.properties` son para desarrollo local.
+
+**Si lo usas en producción:**
+- Cambia `jwt.secret` por una clave aleatoria segura
+- Usa variables de entorno para credenciales sensibles
+- Configura usuarios de base de datos con permisos limitados
+
 ## Tecnologías
 
 - Java 21
-- Spring Boot 3.5.8
+- Spring Boot 3
 - PostgreSQL
 - Docker / Docker Compose
 - Spring Security + JWT (autenticación)
@@ -13,7 +22,7 @@ Aplicación para la gestión de tiendas de una cadena de supermercados, incluyen
 - Internacionalización (i18n)
 - Swagger/OpenAPI
 
-## Ejecución con Docker
+## Ejecución con Docker (Recomendado)
 
 ### Requisitos
 - Docker

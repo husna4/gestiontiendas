@@ -28,7 +28,7 @@ public class EntityNotFoundException extends RuntimeException{
     }
 
     public EntityNotFoundException(String idMensaje, Object... params) {
-        super(idMensaje);
+        super("Entidad no encontrada");
         this.idMensaje = idMensaje;
         this.params = params;
     }

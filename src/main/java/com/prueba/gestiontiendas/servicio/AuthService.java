@@ -9,5 +9,5 @@ import com.prueba.gestiontiendas.dto.RegisterRequestDto;
  */
 public interface AuthService {
     AuthResponseDto login(LoginRequestDto request);
-    AuthResponseDto register(RegisterRequestDto request);
+    AuthResponseDto registrar(RegisterRequestDto request);
 }

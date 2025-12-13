@@ -6,7 +6,7 @@ import com.prueba.gestiontiendas.dto.LoginRequestDto;
 import com.prueba.gestiontiendas.dto.RegisterRequestDto;
 import com.prueba.gestiontiendas.excepciones.DuplicadoException;
 import com.prueba.gestiontiendas.excepciones.EntityNotFoundException;
-import com.prueba.gestiontiendas.excepciones.PasswordIncorrectoException;
+import com.prueba.gestiontiendas.excepciones.NombreUsuarioOPasswordIncorrectoException;
 import com.prueba.gestiontiendas.modelo.Usuario;
 import com.prueba.gestiontiendas.repositorio.UsuarioRepository;
 import com.prueba.gestiontiendas.servicio.AuthService;
@@ -75,20 +75,8 @@ public class AuthServiceImpl implements AuthService {
             throw new DuplicadoException("El usuario ya existe: " + request.getUsername()); //TODO poner en i18n
         }
 
-        Usuario usuario = Usuario.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Usuario.Role.USER)
-                .build();
-
-        usuarioRepository.save(usuario);
-
-        UserDetails userDetails = User.builder()
-                .username(usuario.getUsername())
-                .password(usuario.getPassword())
-                .roles(usuario.getRole().name())
-                .build();
-
+        Usuario usuario = saveUsuario(request);
+        UserDetails userDetails = buildUserDetails(usuario);
         String token = jwtService.generateToken(userDetails);
 
         return AuthResponseDto.builder()
@@ -98,15 +86,43 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
+    private Usuario saveUsuario(RegisterRequestDto request) {
+        Usuario usuario = Usuario.builder()
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Usuario.Role.USER)
+                .build();
+
+        return usuarioRepository.save(usuario);
+    }
+
+    private UserDetails buildUserDetails(Usuario usuario) {
+        return User.builder()
+                .username(usuario.getUsername())
+                .password(usuario.getPassword())
+                .roles(usuario.getRole().name())
+                .build();
+    }
+
+    @Override
     @Transactional
     public void cambiarPassword(String username, CambiarPasswordDto dto) {
-        Usuario usuario = getUsuarioByUsername(username);
-
-        if(! passwordEncoder.matches(dto.getActualPassword(), usuario.getPassword())) {
-            throw new PasswordIncorrectoException("La contraseña actual es incorrecta");
-        }
+        Usuario usuario = getUsuarioValidandoPassword(username, dto.getActualPassword());
 
         usuario.setPassword(passwordEncoder.encode(dto.getNuevoPassword()));
         usuarioRepository.save(usuario);
+    }
+
+    private Usuario getUsuarioValidandoPassword(String username, String password) {
+        Usuario usuario = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new NombreUsuarioOPasswordIncorrectoException(
+                        "El nombre de usuario o la contraseña son incorrectos")); //TODO ponerlo en i18n
+
+        if (!passwordEncoder.matches(password, usuario.getPassword())) {
+            throw new NombreUsuarioOPasswordIncorrectoException(
+                    "El nombre de usuario o la contraseña son incorrectos"); //TODO ponerlo en i18n
+        }
+
+        return usuario;
     }
 }

@@ -72,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public AuthResponseDto registrar(RegisterRequestDto request) {
         if (usuarioRepository.existsByUsername(request.getUsername())) {
-            throw new DuplicadoException("El usuario ya existe: " + request.getUsername()); //TODO poner en i18n
+            throw new DuplicadoException("auth.user.yaExiste", request.getUsername());
         }
 
         Usuario usuario = saveUsuario(request);

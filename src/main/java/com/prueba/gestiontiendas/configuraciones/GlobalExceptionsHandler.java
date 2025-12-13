@@ -1,5 +1,6 @@
 package com.prueba.gestiontiendas.configuraciones;
 
+import com.prueba.gestiontiendas.excepciones.DuplicadoException;
 import com.prueba.gestiontiendas.excepciones.EntityNotFoundException;
 import com.prueba.gestiontiendas.excepciones.HorasInsuficientesException;
 import com.prueba.gestiontiendas.util.MensajeUtil;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.prueba.gestiontiendas.util.MensajeUtil.buildMensaje;
 
 /**
  * @author Husnain
@@ -48,10 +51,10 @@ public class GlobalExceptionsHandler {
 
     private String buildMensajeEntityNotFound(EntityNotFoundException ex) {
         if(ex.getIdMensaje() != null) {
-            return MensajeUtil.buildMensaje(messageSource, ex.getIdMensaje(), ex.getParams());
+            return buildMensaje(messageSource, ex.getIdMensaje(), ex.getParams());
         }
         else if(ex.getNombreEntidad() != null) {
-            return MensajeUtil.buildMensaje(messageSource, "exception.notfound.detalle", ex.getNombreEntidad(),
+            return buildMensaje(messageSource, "exception.notfound.detalle", ex.getNombreEntidad(),
                     ex.getNombreCampo(), ex.getValorCampo());
         }
         else{
@@ -67,7 +70,7 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException ex) {
         Map<String, String> errores = new HashMap<>();
-        String mensaje = MensajeUtil.buildMensaje(messageSource,"exception.validacion.errores");
+        String mensaje = buildMensaje(messageSource,"exception.validacion.errores");
 
         Map<String, Object> response = createResponse(mensaje, HttpStatus.BAD_REQUEST);
 
@@ -88,7 +91,7 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler(HorasInsuficientesException.class)
     public ResponseEntity<Map<String, Object>> handleObjectNotFoundException(HorasInsuficientesException ex) {
         String mensaje = ex.getHorasDisponibles() != null
-                ? MensajeUtil.buildMensaje(messageSource,"exception.horas.insuficientes", ex.getHorasDisponibles(),
+                ? buildMensaje(messageSource,"exception.horas.insuficientes", ex.getHorasDisponibles(),
                 ex.getHorasSolicitadas())
                 : ex.getMessage();
         Map<String, Object> response = createResponse(mensaje, HttpStatus.BAD_REQUEST);
@@ -104,7 +107,7 @@ public class GlobalExceptionsHandler {
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Map<String, Object>> handleDataIntegrity(DataIntegrityViolationException ex) {
-        String message = MensajeUtil.buildMensaje(messageSource, "exception.integridad.datos");
+        String message = buildMensaje(messageSource, "exception.integridad.datos");
         Map<String, Object> response = createResponse(message, HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -123,7 +126,7 @@ public class GlobalExceptionsHandler {
             AuthenticationException ex,
             HttpServletRequest request) {
 
-        String mensaje = MensajeUtil.buildMensaje(messageSource, "auth.credenciales.invalidas");
+        String mensaje = buildMensaje(messageSource, "auth.credenciales.invalidas");
 
         Map<String, Object> response = createResponse(mensaje, HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
@@ -134,10 +137,25 @@ public class GlobalExceptionsHandler {
             BadCredentialsException ex,
             HttpServletRequest request) {
 
-        String mensaje = MensajeUtil.buildMensaje(messageSource, "auth.credenciales.invalidas");
+        String mensaje = buildMensaje(messageSource, "auth.credenciales.invalidas");
 
         Map<String, Object> response = createResponse(mensaje, HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(DuplicadoException.class)
+    public ResponseEntity<Map<String, Object>> handleDuplicados(
+            DuplicadoException ex,
+            HttpServletRequest request) {
+
+        Map<String, Object> response = createResponse(buidMensajeExcepcionConMessageSource(ex, ex.getDatosClave()),
+                HttpStatus.CONFLICT);
+
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    private String buidMensajeExcepcionConMessageSource(Exception ex, Object... params) {
+        return MensajeUtil.buildMensaje(messageSource, ex.getMessage(), params);
     }
 
     private Map<String, Object> createResponse(String message, HttpStatus status) {

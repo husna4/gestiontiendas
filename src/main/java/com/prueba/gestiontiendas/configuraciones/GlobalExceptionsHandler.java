@@ -3,10 +3,12 @@ package com.prueba.gestiontiendas.configuraciones;
 import com.prueba.gestiontiendas.excepciones.EntityNotFoundException;
 import com.prueba.gestiontiendas.excepciones.HorasInsuficientesException;
 import com.prueba.gestiontiendas.util.MensajeUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -105,6 +107,25 @@ public class GlobalExceptionsHandler {
         Map<String, Object> response = createResponse(message, HttpStatus.BAD_REQUEST);
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Manejo de errores de autenticación
+     *
+     * @param ex
+     * @param request
+     * @return
+     */
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, Object>> handleAuthentication(
+            AuthenticationException ex,
+            HttpServletRequest request) {
+
+        String mensaje = MensajeUtil.buildMensaje(messageSource, "auth.credenciales.invalidas");
+
+        Map<String, Object> response = createResponse(mensaje, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     private Map<String, Object> createResponse(String message, HttpStatus status) {

@@ -29,9 +29,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final FiltroAutenticacionJwt filtroAuthJwt;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
-    public SecurityConfig(FiltroAutenticacionJwt filtroAuthJwt) {
+
+    public SecurityConfig(FiltroAutenticacionJwt filtroAuthJwt, UserDetailsServiceImpl userDetailsService,
+                          JwtAuthenticationEntryPoint authenticationEntryPoint) {
         this.filtroAuthJwt = filtroAuthJwt;
+        this.userDetailsService = userDetailsService;
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     @Bean
@@ -42,24 +48,23 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/api-docs/**").permitAll()
                 .requestMatchers("/api/trabajadores/**").hasAnyRole("ADMIN", "USER")
                 .requestMatchers("/api/tiendas/**").hasAnyRole("ADMIN", "USER")
-                .anyRequest().authenticated()
-        )
+                .anyRequest().authenticated())
             .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-//                .authenticationProvider(authenticationProvider()) No hace falta ya, el ves el método, hay cosas deprecadas en él
-            .addFilterBefore(filtroAuthJwt, UsernamePasswordAuthenticationFilter.class);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authenticationProvider(authenticationProvider()) //No hace falta ya, el ves el método, hay cosas deprecadas en él
+            .addFilterBefore(filtroAuthJwt, UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling(ex -> ex.authenticationEntryPoint(authenticationEntryPoint));
 
         return http.build();
     }
 
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService);
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        return authProvider;
-//    }
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -70,4 +75,9 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return userDetailsService;
+//    }
 }

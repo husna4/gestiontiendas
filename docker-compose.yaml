@@ -5,7 +5,7 @@ services:
     image: postgres:15
     container_name: gestiontiendas-db
     environment:
-      POSTGRES_DB: mydb
+      POSTGRES_DB: mydb2
       POSTGRES_USER: husna
       POSTGRES_PASSWORD: husna
     ports:
@@ -33,12 +33,14 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: LaDeSiempre
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb2
+      SPRING_DATASOURCE_USERNAME: husna
+      SPRING_DATASOURCE_PASSWORD: husna
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       TIENDA_EXTERNA_URL: http://tiendas-externas:8080
       SPRING_FLYWAY_ENABLED: true
+      JWT_SECRET: MiClaveSecretaSuperSeguraParaGenerarTokensJWT2025DebeSerLargaYCompleja
+      JWT_EXPIRATION: 86400000
 
 volumes:
   postgres_data:

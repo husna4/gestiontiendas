@@ -7,15 +7,93 @@
     {
       "key": "baseUrl",
       "value": "http://localhost:8080/api"
+    },
+    {
+      "key": "token",
+      "value": ""
     }
   ],
   "item": [
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set(\"token\", jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.collectionVariables.set(\"token\", jsonData.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/register",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"nuevouser\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        }
+      ]
+    },
     {
       "name": "Trabajadores",
       "item": [
         {
           "name": "Listar trabajadores de tienda",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "GET",
             "url": "{{baseUrl}}/tiendas/1/trabajadores"
           }
@@ -23,6 +101,15 @@
         {
           "name": "Obtener trabajador",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "GET",
             "url": "{{baseUrl}}/trabajadores/1"
           }
@@ -30,6 +117,15 @@
         {
           "name": "Crear trabajador",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "POST",
             "url": "{{baseUrl}}/tiendas/1/trabajadores",
             "header": [
@@ -47,6 +143,15 @@
         {
           "name": "Editar trabajador",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "PUT",
             "url": "{{baseUrl}}/trabajadores/1",
             "header": [
@@ -64,6 +169,15 @@
         {
           "name": "Eliminar trabajador",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "DELETE",
             "url": "{{baseUrl}}/trabajadores/1"
           }
@@ -76,6 +190,15 @@
         {
           "name": "Listar asignaciones de trabajador",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "GET",
             "url": "{{baseUrl}}/trabajadores/1/asignaciones"
           }
@@ -83,6 +206,15 @@
         {
           "name": "Asignar trabajador a sección",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "POST",
             "url": "{{baseUrl}}/trabajadores/1/asignaciones",
             "header": [
@@ -100,6 +232,15 @@
         {
           "name": "Desasignar trabajador de sección",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "DELETE",
             "url": "{{baseUrl}}/trabajadores/1/asignaciones/1"
           }
@@ -112,6 +253,15 @@
         {
           "name": "Informe estado tienda",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "GET",
             "url": "{{baseUrl}}/tiendas/1/informes/estado"
           }
@@ -119,6 +269,15 @@
         {
           "name": "Informe horas sin cubrir",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "GET",
             "url": "{{baseUrl}}/tiendas/1/informes/horas-sin-cubrir"
           }
@@ -131,6 +290,15 @@
         {
           "name": "Tienda con secciones y aptitudes",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
             "method": "GET",
             "url": "{{baseUrl}}/tiendas/1/secciones-aptitudes"
           }

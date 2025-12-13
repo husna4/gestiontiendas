@@ -5,14 +5,15 @@ Aplicación para la gestión de tiendas de una cadena de supermercados, incluyen
 ## Tecnologías
 
 - Java 21
-- Spring Boot 3
+- Spring Boot 3.5.8
 - PostgreSQL
 - Docker / Docker Compose
+- Spring Security + JWT (autenticación)
 - Flyway (migraciones de base de datos)
 - Internacionalización (i18n)
 - Swagger/OpenAPI
 
-## Ejecución con Docker (Recomendado)
+## Ejecución con Docker
 
 ### Requisitos
 - Docker
@@ -70,6 +71,68 @@ mvn spring-boot:run
 
 La colección de Postman está disponible en: `postman/gestiontiendas.postman_collection.json`
 
+**Importante:** Todos los endpoints (excepto login y register) requieren autenticación JWT.
+
+## Autenticación
+
+La aplicación utiliza **JWT (JSON Web Tokens)** para la autenticación.
+
+### Usuarios por defecto
+
+- **Admin:** username: `admin`, password: `admin123`
+- **User:** username: `user`, password: `user123`
+
+### Flujo de autenticación
+
+**1. Login:**
+```bash
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+```
+
+**Respuesta:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "username": "admin",
+  "role": "ADMIN"
+}
+```
+
+**2. Usar el token en requests:**
+
+Añade el header en todas las peticiones protegidas:
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+**3. Registrar nuevo usuario:**
+```bash
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "username": "nuevouser",
+  "password": "password123"
+}
+```
+
+### Endpoints públicos (sin autenticación)
+
+- `POST /api/auth/login`
+- `POST /api/auth/register`
+- `/swagger-ui.html`
+- `/api-docs`
+
+### Endpoints protegidos
+
+Todos los demás endpoints requieren token JWT válido.
+
 ## Internacionalización
 
 La aplicación soporta mensajes de error y validaciones en **español** e **inglés**. Los mensajes están configurados en:
@@ -125,7 +188,6 @@ Flyway mantiene un registro de todas las migraciones ejecutadas en la tabla `fly
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
 | GET | `/api/tiendas/{codigoTienda}/trabajadores` | Listar trabajadores de una tienda |
-| GET | `/api/trabajadores/{id}` | Obtener un trabajador |
 | POST | `/api/tiendas/{codigoTienda}/trabajadores` | Crear trabajador |
 | PUT | `/api/trabajadores/{id}` | Editar trabajador |
 | DELETE | `/api/trabajadores/{id}` | Eliminar trabajador |

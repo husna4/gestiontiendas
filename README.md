@@ -79,8 +79,8 @@ La aplicación utiliza **JWT (JSON Web Tokens)** para la autenticación.
 
 ### Usuarios por defecto
 
-- **Admin:** username: `admin`, password: `password123`
-- **User:** username: `user`, password: `password123`
+- **Admin:** username: `admin`, password: `admin123`
+- **User:** username: `user`, password: `user123`
 
 ### Flujo de autenticación
 

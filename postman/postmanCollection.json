@@ -76,6 +76,32 @@
               "raw": "{\n  \"username\": \"nuevouser\",\n  \"password\": \"password123\"\n}"
             }
           }
+        },
+        {
+          "name": "Cambiar contraseña",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ]
+            },
+            "method": "PUT",
+            "url": "{{baseUrl}}/auth/change-password",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"actualPassword\": \"admin123\",\n  \"nuevoPassword\": \"newpassword123\"\n}"
+            }
+          }
         }
       ]
     },

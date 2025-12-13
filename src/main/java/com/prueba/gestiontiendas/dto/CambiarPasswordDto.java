@@ -15,6 +15,6 @@ public class CambiarPasswordDto {
     private String actualPassword;
 
     @NotBlank
-    @Size(min = 6, message = "{auth.cambiarPassword.nueva.obligatorio}")
+    @Size(min = 6, message = "{auth.password.tamano}")
     private String nuevoPassword;
 }

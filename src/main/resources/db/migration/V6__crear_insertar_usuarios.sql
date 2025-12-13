@@ -7,11 +7,11 @@ CREATE TABLE usuario (
 );
 
 -- Insertar usuario admin por defecto (password: admin123)
--- BCrypt hash de "password123"
+-- BCrypt hash de "admin123"
 INSERT INTO usuario (username, password, role)
-VALUES ('admin', '$2a$10$DE2ACRIFEhZNr6pWcr/xF.ofBsiFOIzqwfxtcreYit9FCSQb6.xWS', 'ADMIN');
+VALUES ('admin', '$2a$10$deNCSKnH5e4AysOEwT8B2eFvBjNOd827I/xrjU.yBZluYEEBoJhZK', 'ADMIN');
 
 -- Insertar usuario normal por defecto (password: user123)
--- BCrypt hash de "password123"
+-- BCrypt hash de "user123"
 INSERT INTO usuario (username, password, role)
-VALUES ('user', '$2a$10$DE2ACRIFEhZNr6pWcr/xF.ofBsiFOIzqwfxtcreYit9FCSQb6.xWS', 'USER');
+VALUES ('user', '$2a$10$5LOH3uPN.G5k0ZzgEzVCcelM.7WWq1FIn/qwHTKwQ9jrQkluFqiP2', 'USER');

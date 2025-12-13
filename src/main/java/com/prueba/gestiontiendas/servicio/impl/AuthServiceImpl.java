@@ -6,11 +6,11 @@ import com.prueba.gestiontiendas.dto.LoginRequestDto;
 import com.prueba.gestiontiendas.dto.RegisterRequestDto;
 import com.prueba.gestiontiendas.excepciones.DuplicadoException;
 import com.prueba.gestiontiendas.excepciones.EntityNotFoundException;
-import com.prueba.gestiontiendas.excepciones.NombreUsuarioOPasswordIncorrectoException;
 import com.prueba.gestiontiendas.modelo.Usuario;
 import com.prueba.gestiontiendas.repositorio.UsuarioRepository;
 import com.prueba.gestiontiendas.servicio.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -114,13 +114,10 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private Usuario getUsuarioValidandoPassword(String username, String password) {
-        Usuario usuario = usuarioRepository.findByUsername(username)
-                .orElseThrow(() -> new NombreUsuarioOPasswordIncorrectoException(
-                        "El nombre de usuario o la contraseña son incorrectos")); //TODO ponerlo en i18n
+        Usuario usuario = getUsuarioByUsername(username);
 
         if (!passwordEncoder.matches(password, usuario.getPassword())) {
-            throw new NombreUsuarioOPasswordIncorrectoException(
-                    "El nombre de usuario o la contraseña son incorrectos"); //TODO ponerlo en i18n
+            throw new BadCredentialsException("Password incorrecto");
         }
 
         return usuario;

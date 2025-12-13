@@ -8,6 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -120,6 +121,17 @@ public class GlobalExceptionsHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<Map<String, Object>> handleAuthentication(
             AuthenticationException ex,
+            HttpServletRequest request) {
+
+        String mensaje = MensajeUtil.buildMensaje(messageSource, "auth.credenciales.invalidas");
+
+        Map<String, Object> response = createResponse(mensaje, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, Object>> handleNombreUsuarioOPasswordIncorrecto(
+            BadCredentialsException ex,
             HttpServletRequest request) {
 
         String mensaje = MensajeUtil.buildMensaje(messageSource, "auth.credenciales.invalidas");

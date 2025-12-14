@@ -1,5 +1,12 @@
 # Gestión de Tiendas - API REST
 
+![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3-green?logo=springboot&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
+![JWT](https://img.shields.io/badge/Security-JWT-000000?logo=jsonwebtokens&logoColor=white)
+![Flyway](https://img.shields.io/badge/Migrations-Flyway-CC0200?logo=flyway&logoColor=white)
+
 Aplicación para la gestión de tiendas de una cadena de supermercados, incluyendo la gestión de trabajadores, secciones y asignaciones.
 
 ## ⚠️ Nota de Seguridad
@@ -264,6 +271,12 @@ La aplicación carga datos iniciales automáticamente:
 - Manejo de armas blancas, Limpiar pescado (Pescadería)
 - Fortaleza física (Verduras)
 - Alquimia (Droguería)
+
+## Licencia
+
+Copyright © 2024 Husnain Chaudhry. Todos los derechos reservados.
+
+Este proyecto es de código abierto para fines de visualización y evaluación únicamente. No está permitido el uso, copia, modificación o distribución sin autorización explícita del autor.
 
 ## Autor
 

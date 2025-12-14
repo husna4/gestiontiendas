@@ -238,16 +238,16 @@ POST /api/trabajadores/1/asignaciones
 
 ### Informes
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/api/tiendas/{codigoTienda}/informes/estado` | Estado de la tienda con secciones y trabajadores |
-| GET | `/api/tiendas/{codigoTienda}/informes/horas-sin-cubrir` | Secciones con horas sin cubrir |
+| Método | Endpoint                                                | Descripción                                      |
+|--------|---------------------------------------------------------|--------------------------------------------------|
+| GET    | `/api/tiendas/{codigoTienda}/informes/estado`           | Estado de la tienda con secciones y trabajadores |
+| GET    | `/api/tiendas/{codigoTienda}/informes/horas-sin-cubrir` | Secciones con horas sin cubrir                   |
 
 ### Tiendas
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/api/tiendas/{codigoTienda}/secciones-aptitudes` | Tienda con secciones y aptitudes necesarias |
+| Método | Endpoint                                          | Descripción                                 |
+|--------|---------------------------------------------------|---------------------------------------------|
+| GET    | `/api/tiendas/{codigoTienda}/secciones-aptitudes` | Tienda con secciones y aptitudes necesarias |
 
 ## Datos de prueba
 

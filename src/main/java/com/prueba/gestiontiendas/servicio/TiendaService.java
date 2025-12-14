@@ -7,5 +7,5 @@ import com.prueba.gestiontiendas.modelo.Tienda;
  */
 public interface TiendaService {
 
-    public Tienda getTiendaByCodigo(String codigo);
+    Tienda getTiendaByCodigo(String codigo);
 }

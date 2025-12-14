@@ -13,13 +13,13 @@ import java.util.List;
 @Service
 public interface TrabajadorService {
 
-    public Trabajador getTrabajador(Long id);
+    Trabajador getTrabajador(Long id);
 
-    public List<Trabajador> getTrabajadoresByCodigoTienda(String codigoTienda);
+    List<Trabajador> getTrabajadoresByCodigoTienda(String codigoTienda);
 
-    public Trabajador crear(String codigoTienda, Trabajador trabajador);
+    Trabajador crear(String codigoTienda, Trabajador trabajador);
 
-    public Trabajador editar(Long id, TrabajadorRequestDto dto);
+    Trabajador editar(Long id, TrabajadorRequestDto dto);
 
-    public void eliminar(Long id);
+    void eliminar(Long id);
 }

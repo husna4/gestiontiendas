@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public interface AsignacionTrabajadorSeccionRepository extends JpaRepository<AsignacionTrabajadorSeccion, Long> {
 
-    public Optional<AsignacionTrabajadorSeccion> findByTrabajadorIdAndSeccionId(Long trabajadorId, Long seccionId);
+    Optional<AsignacionTrabajadorSeccion> findByTrabajadorIdAndSeccionId(Long trabajadorId, Long seccionId);
 
-    public List<AsignacionTrabajadorSeccion> findByTrabajadorId(Long trabajadorId);
+    List<AsignacionTrabajadorSeccion> findByTrabajadorId(Long trabajadorId);
 }

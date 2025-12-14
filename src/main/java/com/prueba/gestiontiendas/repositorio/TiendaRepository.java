@@ -9,5 +9,5 @@ import java.util.Optional;
  * @author Husnain
  */
 public interface TiendaRepository extends JpaRepository<Tienda, Long> {
-    public Optional<Tienda> findByCodigo(String codigo);
+    Optional<Tienda> findByCodigo(String codigo);
 }

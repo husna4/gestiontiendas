@@ -9,6 +9,6 @@ import java.util.List;
  */
 
 public interface SeccionService {
-    public Seccion getSeccion(Long id);
-    public List<Seccion> getSecciones();
+    Seccion getSeccion(Long id);
+    List<Seccion> getSecciones();
 }

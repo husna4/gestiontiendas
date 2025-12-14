@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface AsignacionTrabajadorSeccionService {
 
-    public AsignacionTrabajadorSeccion asignar(Long trabajadorId, Long seccionId, Integer horas);
-    public void desasignar(Long trabajadorId, Long seccionId);
-    public List<AsignacionTrabajadorSeccion> getAsignacionesTrabajador(Long trabajadorId);
+    AsignacionTrabajadorSeccion asignar(Long trabajadorId, Long seccionId, Integer horas);
+    void desasignar(Long trabajadorId, Long seccionId);
+    List<AsignacionTrabajadorSeccion> getAsignacionesTrabajador(Long trabajadorId);
 }

@@ -8,5 +8,5 @@ import java.util.Optional;
  * @author Husnain
  */
 public interface TiendaExternaClient {
-    public Optional<TiendaExternaDto> getTienda(String codigoTienda);
+    Optional<TiendaExternaDto> getTienda(String codigoTienda);
 }

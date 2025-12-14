@@ -8,6 +8,6 @@ import com.prueba.gestiontiendas.dto.InformeHorasSinCubrirDto;
  */
 public interface InformeService {
 
-    public InformeEstadoTiendaDto getInformeEstadoTienda(String codigoTienda);
-    public InformeHorasSinCubrirDto getInformeHorasSinCubrir(String codigoTienda);
+    InformeEstadoTiendaDto getInformeEstadoTienda(String codigoTienda);
+    InformeHorasSinCubrirDto getInformeHorasSinCubrir(String codigoTienda);
 }

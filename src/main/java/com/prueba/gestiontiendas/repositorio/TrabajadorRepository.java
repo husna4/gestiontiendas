@@ -9,5 +9,5 @@ import java.util.List;
  * @author Husnain
  */
 public interface TrabajadorRepository extends JpaRepository<Trabajador, Long> {
-    public List<Trabajador> findByTiendaCodigo(String codigo);
+    List<Trabajador> findByTiendaCodigo(String codigo);
 }

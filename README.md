@@ -274,7 +274,7 @@ La aplicación carga datos iniciales automáticamente:
 
 ## Licencia
 
-Copyright © 2024 Husnain Chaudhry. Todos los derechos reservados.
+Copyright © 2025 Husnain Chaudhry. Todos los derechos reservados.
 
 Este proyecto es de código abierto para fines de visualización y evaluación únicamente. No está permitido el uso, copia, modificación o distribución sin autorización explícita del autor.
 

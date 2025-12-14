@@ -201,12 +201,12 @@ Flyway mantiene un registro de todas las migraciones ejecutadas en la tabla `fly
 
 ### Trabajadores
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/api/tiendas/{codigoTienda}/trabajadores` | Listar trabajadores de una tienda |
-| POST | `/api/tiendas/{codigoTienda}/trabajadores` | Crear trabajador |
-| PUT | `/api/trabajadores/{id}` | Editar trabajador |
-| DELETE | `/api/trabajadores/{id}` | Eliminar trabajador |
+| Método | Endpoint                                   | Descripción                       |
+|--------|--------------------------------------------|-----------------------------------|
+| GET    | `/api/tiendas/{codigoTienda}/trabajadores` | Listar trabajadores de una tienda |
+| POST   | `/api/tiendas/{codigoTienda}/trabajadores` | Crear trabajador                  |
+| PUT    | `/api/trabajadores/{id}`                   | Editar trabajador                 |
+| DELETE | `/api/trabajadores/{id}`                   | Eliminar trabajador               |
 
 **Ejemplo crear trabajador:**
 ```json
@@ -221,11 +221,11 @@ POST /api/tiendas/1/trabajadores
 
 ### Asignaciones
 
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/api/trabajadores/{trabajadorId}/asignaciones` | Listar asignaciones de un trabajador |
-| POST | `/api/trabajadores/{trabajadorId}/asignaciones` | Asignar trabajador a sección |
-| DELETE | `/api/trabajadores/{trabajadorId}/asignaciones/{seccionId}` | Desasignar de sección |
+| Método | Endpoint                                                    | Descripción                          |
+|--------|-------------------------------------------------------------|--------------------------------------|
+| GET    | `/api/trabajadores/{trabajadorId}/asignaciones`             | Listar asignaciones de un trabajador |
+| POST   | `/api/trabajadores/{trabajadorId}/asignaciones`             | Asignar trabajador a sección         |
+| DELETE | `/api/trabajadores/{trabajadorId}/asignaciones/{seccionId}` | Desasignar de sección                |
 
 **Ejemplo asignar:**
 ```json

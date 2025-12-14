@@ -18,7 +18,6 @@ import java.util.Optional;
 
 import static com.prueba.gestiontiendas.constantes.ConstantesGlobales.MAXIMO_HORAS_DISPONIBLES_TRABAJADOR;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -26,7 +25,7 @@ import static org.mockito.Mockito.*;
  */
 
 @ExtendWith(MockitoExtension.class)
-public class PruebasAsignacionTrabajadorSeccion {
+public class AsignacionTrabajadorSeccionTest {
 
     @Mock
     private AsignacionTrabajadorSeccionRepository asignacionRepository;

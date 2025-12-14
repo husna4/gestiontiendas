@@ -34,7 +34,7 @@ public class TiendaExternaClientImpl implements TiendaExternaClient {
         try {
             String url = baseUrl + "/" + STORES_PATH + "/" + codigoTienda;
             TiendaExternaDto tienda = restTemplate.getForObject(url, TiendaExternaDto.class);
-            return Optional.of(tienda);
+            return Optional.ofNullable(tienda);
         } catch (RestClientException e) {
             log.error("Error al obtener tienda externa con código {}: {}", codigoTienda, e.getMessage());
             return Optional.empty();

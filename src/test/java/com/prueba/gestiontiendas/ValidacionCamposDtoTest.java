@@ -13,11 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Husnain
  */
 
-public class PruebaValidacion {
+public class ValidacionCamposDtoTest {
 
     private final Validator validator;
 
-    public PruebaValidacion() {
+    public ValidacionCamposDtoTest() {
         try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
             this.validator = factory.getValidator();
         }

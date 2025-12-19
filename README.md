@@ -190,6 +190,7 @@ Los scripts de migración se encuentran en `src/main/resources/db/migration/`:
 - `V3__insertar_tiendas.sql` - Datos iniciales de tiendas
 - `V4__insertar_aptitudes.sql` - Datos iniciales de aptitudes
 - `V5__insertar_seccion_aptitudes.sql` - Relaciones sección-aptitud
+- `V6__crear_insertar_usuarios.sql` - Datos iniciales de usuarios
 
 ### Historial de migraciones
 

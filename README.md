@@ -11,7 +11,7 @@ Aplicación para la gestión de tiendas de una cadena de supermercados, incluyen
 
 ## ⚠️ Nota de Seguridad
 
-Este proyecto es para fines de aprendizaje y portfolio. Las credenciales en `application.properties` son para desarrollo local.
+Las credenciales en `application.properties` son para desarrollo local.
 
 **Si lo usas en producción:**
 - Cambia `jwt.secret` por una clave aleatoria segura

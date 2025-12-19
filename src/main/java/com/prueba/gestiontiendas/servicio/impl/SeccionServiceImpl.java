@@ -5,6 +5,7 @@ import com.prueba.gestiontiendas.modelo.Seccion;
 import com.prueba.gestiontiendas.repositorio.SeccionRepository;
 import com.prueba.gestiontiendas.servicio.SeccionService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional(readOnly = true)
 public class SeccionServiceImpl implements SeccionService {
     private final SeccionRepository seccionRepository;
 

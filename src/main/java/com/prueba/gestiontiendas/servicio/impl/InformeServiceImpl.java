@@ -9,6 +9,7 @@ import com.prueba.gestiontiendas.servicio.InformeService;
 import com.prueba.gestiontiendas.servicio.SeccionService;
 import com.prueba.gestiontiendas.servicio.TiendaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -17,6 +18,7 @@ import java.util.*;
  */
 
 @Service
+@Transactional(readOnly = true)
 public class InformeServiceImpl implements InformeService {
     private final TiendaService tiendaService;
     private final SeccionService seccionService;
@@ -93,9 +95,6 @@ public class InformeServiceImpl implements InformeService {
 
     /**
      * Devuelve las secciones sin cubrir de una tienda con sus horas sin cubrir
-     *
-     * @param idTienda
-     * @return
      */
     private Map<Seccion, Integer> buildMapSeccionesSinCubrir(Long idTienda) {
         Map<Seccion, Integer> seccionesSinCubrir = new HashMap<>();

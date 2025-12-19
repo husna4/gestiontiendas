@@ -10,6 +10,7 @@ import com.prueba.gestiontiendas.servicio.AsignacionTrabajadorSeccionService;
 import com.prueba.gestiontiendas.servicio.SeccionService;
 import com.prueba.gestiontiendas.servicio.TrabajadorService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @author Husnain
  */
 @Service
+@Transactional(readOnly = true)
 public class AsignacionServiceImpl implements AsignacionTrabajadorSeccionService {
     private final AsignacionTrabajadorSeccionRepository asignacionRepository;
     private final TrabajadorService trabajadorService;
@@ -34,6 +36,7 @@ public class AsignacionServiceImpl implements AsignacionTrabajadorSeccionService
     }
 
     //FIXME: controlar si se excede de las horas necesarias de una sección???
+    @Transactional
     public AsignacionTrabajadorSeccion asignar(Long trabajadorId, Long seccionId, Integer horas) {
         Trabajador trabajador = trabajadorService.getTrabajador(trabajadorId);
         Seccion seccion = seccionService.getSeccion(seccionId);
@@ -53,6 +56,7 @@ public class AsignacionServiceImpl implements AsignacionTrabajadorSeccionService
         return asignacionRepository.save(asignacion);
     }
 
+    @Transactional
     public void desasignar(Long trabajadorId, Long seccionId) {
         AsignacionTrabajadorSeccion asignacion = asignacionRepository
                 .findByTrabajadorIdAndSeccionId(trabajadorId, seccionId)
@@ -60,11 +64,6 @@ public class AsignacionServiceImpl implements AsignacionTrabajadorSeccionService
                         new EntityNotFoundException("exception.notfound.asignacion", trabajadorId, seccionId));
 
         asignacionRepository.delete(asignacion);
-    }
-
-    public List<AsignacionTrabajadorSeccion> getAsignacionesByTrabajadorId(Long trabajadorId) {
-        trabajadorService.getTrabajador(trabajadorId); // Valida que existe
-        return asignacionRepository.findByTrabajadorId(trabajadorId);
     }
 
     private void controlarSuperarHorasDisponibles(Trabajador trabajador, Long seccionId, Integer horas) {

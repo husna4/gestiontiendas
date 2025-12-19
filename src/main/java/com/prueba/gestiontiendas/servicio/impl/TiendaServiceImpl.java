@@ -5,12 +5,14 @@ import com.prueba.gestiontiendas.modelo.Tienda;
 import com.prueba.gestiontiendas.repositorio.TiendaRepository;
 import com.prueba.gestiontiendas.servicio.TiendaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Husnain
  */
 
 @Service
+@Transactional(readOnly = true)
 public class TiendaServiceImpl implements TiendaService {
 
     private final TiendaRepository tiendaRepository;

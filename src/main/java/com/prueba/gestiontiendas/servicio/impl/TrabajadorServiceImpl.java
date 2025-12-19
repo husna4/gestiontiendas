@@ -8,6 +8,7 @@ import com.prueba.gestiontiendas.repositorio.TrabajadorRepository;
 import com.prueba.gestiontiendas.servicio.TiendaService;
 import com.prueba.gestiontiendas.servicio.TrabajadorService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional(readOnly = true)
 public class TrabajadorServiceImpl implements TrabajadorService {
 
     private final TrabajadorRepository trabajadorRepository;
@@ -40,6 +42,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     }
 
     @Override
+    @Transactional
     public Trabajador crear(String codigoTienda, Trabajador trabajador) {
         Tienda tienda = tiendaService.getTiendaByCodigo(codigoTienda);
 
@@ -48,6 +51,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     }
 
     @Override
+    @Transactional
     public Trabajador editar(Long id, TrabajadorRequestDto dto) {
         Trabajador trabajador = getTrabajador(id);
 
@@ -60,6 +64,7 @@ public class TrabajadorServiceImpl implements TrabajadorService {
     }
 
     @Override
+    @Transactional
     public void eliminar(Long id) {
         getTrabajador(id);
         trabajadorRepository.deleteById(id);
